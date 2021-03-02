@@ -1,0 +1,26 @@
+{
+  "name": "pm-fill",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "init": "node src/init.js",
+    "fill": "node src/fill.js",
+    "cycle": "node src/cycle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddu6/pm-fill.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ddu6/pm-fill/issues"
+  },
+  "homepage": "https://github.com/ddu6/pm-fill#readme",
+  "devDependencies": {
+    "playwright-chromium": "^1.8.0"
+  },
+  "dependencies": {
+    "csv": "^5.3.2"
+  }
+}

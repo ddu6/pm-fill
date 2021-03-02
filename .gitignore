@@ -1,0 +1,5 @@
+node_modules
+archive
+config.json
+password.csv
+nohup.out
