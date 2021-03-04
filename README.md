@@ -14,7 +14,7 @@ npm install
 ```
 npm run init
 ```
-Modify `password.csv`. 
+Modify `passwords.csv`. 
 
 ## Fill
 ```

@@ -3,7 +3,7 @@ const csv=require('csv')
 const path=require('path')
 const fs=require('fs')
 async function fillAll(){
-    const string0=fs.readFileSync(path.join(__dirname,'../password.csv'),{encoding:'utf8'})
+    const string0=fs.readFileSync(path.join(__dirname,'../passwords.csv'),{encoding:'utf8'})
     const array0=await new Promise(resolve=>{
         csv.parse(string0,{columns:true,comment:'#',trim:true,skip_lines_with_error:true},
         (err,val)=>{
