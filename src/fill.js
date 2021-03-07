@@ -1,2 +1,2 @@
-const {fillAll}=require('./mod.js')
+const {fillAll}=require('./base.js')
 fillAll()

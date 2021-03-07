@@ -1,4 +1,4 @@
-const {fillAll}=require('./mod.js')
+const {fillAll}=require('./base.js')
 const path=require('path')
 const fs=require('fs')
 const config=JSON.parse(fs.readFileSync(path.join(__dirname,'../config.json'),{encoding:'utf8'}))

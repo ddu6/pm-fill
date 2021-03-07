@@ -1,5 +1,5 @@
 # PKU Health Monitor Filler
-- Require [`nodejs`](https://nodejs.org/). 
+- Require [`nodejs`](https://nodejs.org/).
 
 ## Install
 ```
@@ -14,16 +14,16 @@ npm install
 ```
 npm run init
 ```
-Modify `passwords.csv`. 
+Fill in `passwords.csv`.
 
 ## Fill
 ```
 npm run fill
 ```
-Screenshots will be saved in `archive`. 
+Screenshots will be saved in `archive`.
 
 ## Cycle
-Modify `config.json`. 
+Modify `config.json`.
 ```
 nohup npm run cycle &
 ```
