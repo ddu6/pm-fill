@@ -2,29 +2,36 @@ const { chromium } = require('playwright-chromium')
 const csv=require('csv')
 const path=require('path')
 const fs=require('fs')
-async function fillAll(){
-    const string0=fs.readFileSync(path.join(__dirname,'../passwords.csv'),{encoding:'utf8'})
-    const array0=await new Promise(resolve=>{
-        csv.parse(string0,{columns:true,comment:'#',trim:true,skip_lines_with_error:true},
-        (err,val)=>{
+async function parseCSV(string){
+    const result=await new Promise((resolve)=>{
+        csv.parse(string,{
+            columns:true,
+            comment:'#',
+            trim:true,
+            skip_lines_with_error:true
+        },(err,val)=>{
             if(err)throw err
             resolve(val)
         })
     })
-    if(array0.length===0)throw new Error('empty')
-    for(let i=0;i<array0.length;i++){
-        const {studentId,password}=array0[i]
+    return result
+}
+async function fillAll(){
+    const passwords=await parseCSV(fs.readFileSync(path.join(__dirname,'../passwords.csv'),{encoding:'utf8'}))
+    if(passwords.length===0)throw new Error('passwords.csv is not filled in correctly.')
+    for(let i=0;i<passwords.length;i++){
+        const {studentId,password}=passwords[i]
         if(typeof studentId!=='string'||typeof password!=='string')continue
         await fillOne(studentId,password)
     }
 }
 async function fillOne(studentId,password){
-    const browser = await chromium.launch()
+    const browser = await chromium.launch({headless:false})
     const context = await browser.newContext({
         viewport: { width: 500, height: 2000 }
     })
     const page = await context.newPage()
-    await page.goto('https://portal.pku.edu.cn/')
+    await page.goto('https://portal.pku.edu.cn/portal2017/login.jsp')
     await page.fill('#user_name',studentId)
     await page.fill('#password',password)
     await page.click('#logon_button')
@@ -40,4 +47,24 @@ async function fillOne(studentId,password){
     await page.screenshot({ path: path.join(__dirname,`../archive/${dateStr}-${studentId}.png`) })
     await browser.close()
 }
+async function cycle(){
+    const config=JSON.parse(fs.readFileSync(path.join(__dirname,'../config.json'),{encoding:'utf8'}))
+    let hour
+    const tmp=config.hour
+    if(typeof tmp!=='number'
+        ||isNaN(tmp)
+        ||tmp%1!==0
+        ||tmp<0
+        ||tmp>23
+    )hour=2
+    else hour=tmp
+    const now=new Date().getHours()
+    if(hour<now)hour+=24
+    const delta=(hour-now)*3600000
+    setTimeout(() => {
+        fillAll()
+        setInterval(fillAll,24*3600000)
+    }, delta)
+}
 module.exports.fillAll=fillAll
+module.exports.cycle=cycle
