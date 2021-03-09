@@ -1,5 +1,5 @@
 # PKU Health Monitor Filler
-- Require [`nodejs`](https://nodejs.org/).
+- Require [nodejs](https://nodejs.org/).
 
 ## Install
 ```
